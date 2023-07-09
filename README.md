@@ -3,8 +3,8 @@
 Load [beego](https://github.com/beego/beego) schemas into an [Atlas](https://atlasgo.io) project.
 
 ### Use-cases
-1. **Declarative migrations** - use a Terraform-like `atlas schema apply --env gorm` to apply your beego schema to the database.
-2. **Automatic migration planning** - use `atlas migrate diff --env gorm` to automatically plan a migration from  
+1. **Declarative migrations** - use a Terraform-like `atlas schema apply --env beego` to apply your beego schema to the database.
+2. **Automatic migration planning** - use `atlas migrate diff --env beego` to automatically plan a migration from  
   the current database version to the beego schema.
 
 ### Installation
@@ -28,7 +28,7 @@ you can use the provider directly to load your beego schema into Atlas.
 In your project directory, create a new file named `atlas.hcl` with the following contents:
 
 ```hcl
-data "external_schema" "gorm" {
+data "external_schema" "beego" {
   program = [
     "go",
     "run",
@@ -74,7 +74,7 @@ import (
 func main() {
   stmts, err := beegoschema.New("mysql").Load()
   if err != nil {
-    fmt.Fprintf(os.Stderr, "failed to load gorm schema: %v\n", err)
+    fmt.Fprintf(os.Stderr, "failed to load beego schema: %v\n", err)
     os.Exit(1)
   }
   io.WriteString(os.Stdout, stmts)
@@ -91,7 +91,7 @@ func init() {
 In your project directory, create a new file named `atlas.hcl` with the following contents:
 
 ```hcl
-data "external_schema" "gorm" {
+data "external_schema" "beego" {
   program = [
     "go",
     "run",
