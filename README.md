@@ -116,7 +116,7 @@ env "beego" {
 
 ### Usage
 
-Once you have the provider installed, you can use it to apply your `beego` schema to the database:
+Once you have the provider installed, you can use it to apply your `beego` schema to the database.
 
 #### Apply
 
