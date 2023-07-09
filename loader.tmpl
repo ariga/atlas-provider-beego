@@ -1,0 +1,22 @@
+package main
+
+import (
+  	"io"
+	"fmt"
+	"os"
+
+	{{- range .Imports }}
+		_ "{{ . }}"
+	{{- end}}
+	"ariga.io/atlas-provider-beego/beegoschema"
+	_ "ariga.io/atlas-go-sdk/recordriver"
+)
+
+func main() {
+	stmts, err := beegoschema.New("{{ .Dialect }}").Load()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to load beego schema: %v\n", err)
+		os.Exit(1)
+	}
+	io.WriteString(os.Stdout, stmts)
+}
