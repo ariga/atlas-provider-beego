@@ -22,8 +22,8 @@ go get -u ariga.io/atlas-provider-beego
 
 #### Standalone 
 
-If application contains a package which registers all of its beego models during initialization,
-you can use the provider directly to load your beego schema into Atlas. 
+If your application contains a package that registers all of its Beego models during initialization,
+you can use the provider directly to load your Beego schema into Atlas. 
 
 In your project directory, create a new file named `atlas.hcl` with the following contents:
 
