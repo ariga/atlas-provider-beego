@@ -15,7 +15,7 @@ import (
 // LoadCmd is a command to load models
 type LoadCmd struct {
 	Path    string `help:"path to schema package" required:""`
-	Dialect string `help:"dialect to use" enum:"mysql,sqlite,postgres" required:""`
+	Dialect string `help:"dialect to use" enum:"mysql,sqlite3,postgres" required:""`
 	out     io.Writer
 }
 
@@ -47,6 +47,9 @@ func (c *LoadCmd) Run() error {
 		Imports: []string{pkgs[0].PkgPath},
 	}
 	s, err := tmplrun.New("beegoschema", loaderTmpl).Run(p)
+	if err != nil {
+		return err
+	}
 	if c.out == nil {
 		c.out = os.Stdout
 	}
