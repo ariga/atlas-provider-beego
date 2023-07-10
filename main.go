@@ -37,7 +37,7 @@ func main() {
 }
 
 func (c *LoadCmd) Run() error {
-	c	fg := &packages.Config{Mode: packages.NeedName | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedModule | packages.NeedDeps}
+	cfg := &packages.Config{Mode: packages.NeedName | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedModule | packages.NeedDeps}
 	pkgs, err := packages.Load(cfg, c.Path)
 	if err != nil {
 		return err
