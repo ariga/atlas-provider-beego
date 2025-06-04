@@ -1,11 +1,17 @@
 # atlas-provider-beego
 
-Load [beego](https://github.com/beego/beego) schemas into an [Atlas](https://atlasgo.io) project.
+Use [Atlas](https://atlasgo.io/) with [beego](https://github.com/beego/beego) to manage your database schema as code. By connecting your `beego` models to Atlas,
+you can define and edit your schema directly in Go. Atlas will then automatically plan and apply database schema migrations for you, 
+eliminating the need to write migrations manually.
+
+Atlas brings automated CI/CD workflows to your database, along with built-in support for [testing](https://atlasgo.io/testing/schema), [linting](https://atlasgo.io/versioned/lint),
+schema [drift detection](https://atlasgo.io/monitoring/drift-detection), and [schema monitoring](https://atlasgo.io/monitoring). It also allows you to extend `beego` with 
+advanced database objects such as triggers, row-level security, and custom functions that are not supported natively.
 
 ### Use-cases
-1. **Declarative migrations** - use a Terraform-like `atlas schema apply --env beego` to apply your beego schema to the database.
-2. **Automatic migration planning** - use `atlas migrate diff --env beego` to automatically plan a migration from  
-  the current database version to the beego schema.
+1. [**Declarative migrations**](https://atlasgo.io/declarative/apply) - Use the Terraform-like `atlas schema apply --env beego` command to apply your `beego` schema to the database.
+2. [**Automatic migration planning**](https://atlasgo.io/versioned/diff) - Use `atlas migrate diff --env beego` to automatically plan database schema changes and generate
+   a migration from the current database version to the desired version defined by your `beego` schema.
 
 ### Installation
 
