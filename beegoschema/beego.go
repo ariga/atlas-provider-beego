@@ -13,7 +13,7 @@ func New(dialect string) *Loader {
 	return &Loader{dialect: dialect}
 }
 
-// Loader is a Loader for gorm schema.
+// Loader is a Loader for beego schema.
 type Loader struct {
 	dialect string
 }
