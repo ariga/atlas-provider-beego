@@ -2,7 +2,7 @@ module ariga.io/atlas-provider-beego
 
 go 1.23.0
 
-toolchain go1.24.0
+toolchain go1.24.3
 
 require (
 	ariga.io/atlas-go-sdk v0.0.0-20230709075936-ea75b54bf26f
