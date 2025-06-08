@@ -2,9 +2,11 @@ package beegoschema
 
 import (
 	"database/sql"
-	"os"
+	"fmt"
+	"strings"
 
-	_ "ariga.io/atlas-go-sdk/recordriver"
+	"ariga.io/atlas-go-sdk/recordriver"
+
 	"github.com/beego/beego/v2/client/orm"
 )
 
@@ -23,15 +25,23 @@ func (l *Loader) Load() (string, error) {
 	if err != nil {
 		return "", err
 	}
+	defer db.Close()
 	if err := orm.AddAliasWthDB("default", l.dialect, db); err != nil {
 		return "", err
 	}
-	before := os.Args
-	defer func() {
-		os.Args = before
-	}()
-	// https://github.com/beego/beedoc/blob/master/en-US/mvc/model/cmd.md#print-sql-statements
-	os.Args = []string{"beego", "orm", "sqlall"}
-	orm.RunCommand()
-	return "", nil
+	if err := orm.RunSyncdb("default", false, false); err != nil {
+		return "", err
+	}
+	ss, ok := recordriver.Session("beego")
+	if !ok {
+		return "", fmt.Errorf("could not retrieve recordriver session")
+	}
+	var buf strings.Builder
+	for _, stmt := range ss.Statements {
+		if _, err := fmt.Fprint(&buf, stmt); err != nil {
+			return "", err
+		}
+		buf.WriteString("\n")
+	}
+	return buf.String(), nil
 }
