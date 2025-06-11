@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -18,10 +19,11 @@ func TestLoad(t *testing.T) {
 			}
 			err := cmd.Run()
 			require.NoError(t, err)
-			require.Contains(t, buf.String(), "CREATE TABLE")
-			require.Contains(t, buf.String(), "hotdog_type")
-			require.Contains(t, buf.String(), "stand")
-			require.Contains(t, buf.String(), "hotdog_stock")
+			sql := buf.String()
+			file, err := os.ReadFile("./internal/testdata/models/" + dialect + ".sql")
+			require.NoError(t, err)
+			expected := string(file)
+			require.Equal(t, expected, sql, "generated SQL does not match expected SQL for dialect %s", dialect)
 		})
 	}
 }

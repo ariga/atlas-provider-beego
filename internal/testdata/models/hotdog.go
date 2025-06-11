@@ -27,6 +27,24 @@ type HotdogStock struct {
 	Stand    *Stand      `orm:"rel(fk);on_delete(cascade);index"`
 }
 
+func (u *Stand) TableName() string {
+	return "hotdog_stand"
+}
+
+// Unused is a model that is not registered with Beego ORM.
+type Unused struct {
+	Id int `orm:"auto;pk"`
+}
+
 func init() {
-	orm.RegisterModel(new(HotdogType), new(Stand), new(HotdogStock))
+	orm.RegisterModel(new(HotdogType))
+}
+
+func init() {
+	orm.RegisterModel(new(Stand))
+	x()
+}
+
+func x() {
+	orm.RegisterModel(new(HotdogStock))
 }

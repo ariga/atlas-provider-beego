@@ -6,14 +6,18 @@ import (
 	"os"
 
 	{{- range .Imports }}
-		_ "{{ . }}"
+		"{{ . }}"
 	{{- end}}
 	"ariga.io/atlas-provider-beego/beegoschema"
 	_ "ariga.io/atlas-go-sdk/recordriver"
 )
 
 func main() {
-	stmts, err := beegoschema.New("{{ .Dialect }}").Load()
+	stmts, err := beegoschema.New("{{ .Dialect }}", beegoschema.WithModelPosition(map[any]string{
+				{{- range .Models }}
+					&{{ . }}{}: "{{ .Pos }}",
+				{{- end }}
+				})).Load()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to load beego schema: %v\n", err)
 		os.Exit(1)
