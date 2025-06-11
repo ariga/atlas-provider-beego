@@ -1,6 +1,6 @@
+-- atlas:pos hotdog_stand[type=table] internal/testdata/models/hotdog.go:15:6
 -- atlas:pos hotdog_stock[type=table] internal/testdata/models/hotdog.go:23:6
 -- atlas:pos hotdog_type[type=table] internal/testdata/models/hotdog.go:7:6
--- atlas:pos stand[type=table] internal/testdata/models/hotdog.go:15:6
 
 -- --------------------------------------------------
 --  Table Structure for `ariga.io/atlas-provider-beego/internal/testdata/models.HotdogType`
@@ -15,7 +15,7 @@ CREATE INDEX "hotdog_type_price" ON "hotdog_type" ("price");
 -- --------------------------------------------------
 --  Table Structure for `ariga.io/atlas-provider-beego/internal/testdata/models.Stand`
 -- --------------------------------------------------
-CREATE TABLE IF NOT EXISTS "stand" (
+CREATE TABLE IF NOT EXISTS "hotdog_stand" (
     "id" serial NOT NULL PRIMARY KEY,
     "name" text NOT NULL DEFAULT ''  UNIQUE,
     "address" text NOT NULL,
