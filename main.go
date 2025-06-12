@@ -7,7 +7,6 @@ import (
 	"go/types"
 	"io"
 	"os"
-	"path/filepath"
 	"slices"
 	"strings"
 	"text/template"
@@ -105,12 +104,7 @@ func (m model) String() string {
 }
 
 func gatherModels(pkgs []*packages.Package) []model {
-	dir, err := os.Getwd()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "error getting current working directory: %v\n", err)
-		return nil
-	}
-	models := gatherRegisterModels(pkgs, dir)
+	models := gatherRegisterModels(pkgs)
 	slices.SortFunc(models, func(i, j model) int {
 		return strings.Compare(i.Name, j.Name)
 	})
@@ -118,7 +112,7 @@ func gatherModels(pkgs []*packages.Package) []model {
 }
 
 // gartherRegisterModels gathers models registered with register functions.
-func gatherRegisterModels(pkgs []*packages.Package, wd string) []model {
+func gatherRegisterModels(pkgs []*packages.Package) []model {
 	// Find all functions callable from the beego package that register models.
 	prog, _ := ssautil.AllPackages(pkgs, 0)
 	prog.Build()
@@ -150,17 +144,11 @@ func gatherRegisterModels(pkgs []*packages.Package, wd string) []model {
 			}
 			positions := extractStructsFromSlice(alloc, prog.Fset)
 			for modelName, pos := range positions {
-				// Resolve path to a relative path if possible.
-				relPath, err := filepath.Rel(wd, pos.Filename)
-				if err != nil {
-					fmt.Fprintf(os.Stderr, "error resolving relative path: %v\n", err)
-					relPath = pos.Filename // fallback to absolute path
-				}
 				models = append(models, model{
 					ImportPath: callerFPkg.Pkg.Path(),
 					PkgName:    callerFPkg.Pkg.Name(),
 					Name:       modelName,
-					Pos:        fmt.Sprintf("%s:%d:%d", relPath, pos.Line, pos.Column),
+					Pos:        fmt.Sprintf("%s:%d:%d", pos.Filename, pos.Line, pos.Column),
 				})
 			}
 		}
