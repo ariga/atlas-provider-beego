@@ -1,6 +1,6 @@
--- atlas:pos hotdog_stand[type=table] internal/testdata/models/hotdog.go:15:6
--- atlas:pos hotdog_stock[type=table] internal/testdata/models/hotdog.go:23:6
--- atlas:pos hotdog_type[type=table] internal/testdata/models/hotdog.go:7:6
+-- atlas:pos hotdog_stand[type=table] [ABS_PATH]/internal/testdata/models/hotdog.go:15:6
+-- atlas:pos hotdog_stock[type=table] [ABS_PATH]/internal/testdata/models/hotdog.go:23:6
+-- atlas:pos hotdog_type[type=table] [ABS_PATH]/internal/testdata/models/hotdog.go:7:6
 
 -- --------------------------------------------------
 --  Table Structure for `ariga.io/atlas-provider-beego/internal/testdata/models.HotdogType`
